@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ჩვენს შესახებ - Green AI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Georgian', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }
+
+        header {
+            background: var(--dark-color);
+            color: var(--light-color);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: background 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(44, 62, 80, 0.9);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--light-color);
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        main {
+            padding-top: 80px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        main.loaded {
+            opacity: 1;
+        }
+
+        .about-section {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .about-section h2 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+
+        .about-section p {
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: linear-gradient(to right, var(--dark-color), #34495e);
+            color: var(--light-color);
+            padding: 3rem 0 1rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .footer-section p {
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section.about p {
+            text-align: justify;
+        }
+
+        .footer-section.contact p {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-section.contact i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: var(--light-color);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #34495e;
+        }
+
+        .footer-bottom p {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-section {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+
+            .footer-section h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Green AI</a>
+            <ul>
+                <li><a href="index.html">მთავარი</a></li>
+                <li><a href="prototype.html">პროტოტიპი</a></li>
+                <li><a href="about.html">ჩვენს შესახებ</a></li>
+                <li><a href="team.html">გუნდი</a></li>
+                <li><a href="contact.html">კონტაქტი</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="about" class="about-section">
+            <h2>ჩვენს შესახებ</h2>
+            <p>Green AI არის ინოვაციური პროექტი, რომელიც შეიქმნა Green AI კვირეულის ფარგლებში. ჩვენი მიზანია შევქმნათ ჭკვიანი გადაწყვეტილებები გარემოს დაცვისთვის, ხელოვნური ინტელექტის გამოყენებით.</p>
+            <p>ჩვენ გვჯერა, რომ ტექნოლოგია და მდგრადი განვითარება ხელი-ხელ უნდა მიდიოდნენ, რათა შევქმნათ უკეთესი მომავალი ყველასთვის.</p>
+            <p>ჩვენი გუნდი შედგება გამოცდილი პროფესიონალებისგან, რომლებიც ერთიანდებიან ინოვაციური იდეების გარშემო. ჩვენ ვმუშაობთ იმისთვის, რომ შევქმნათ ტექნოლოგიური გადაწყვეტილებები, რომლებიც არა მხოლოდ გააუმჯობესებენ ნარჩენების მართვას, არამედ ხელს შეუწყობენ მდგრად განვითარებას და გარემოს დაცვას.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>ჩვენს შესახებ</h3>
+                <p>Green AI არის ინოვაციური პროექტი, რომელიც მიზნად ისახავს გარემოს დაცვას ხელოვნური ინტელექტის გამოყენებით.</p>
+            </div>
+            <div class="footer-section contact">
+                <h3>კონტაქტი</h3>
+                <p><i class="fas fa-envelope"></i> info@greenai.ge</p>
+                <p><i class="fas fa-phone"></i> +995 555 12 34 56</p>
+            </div>
+            <div class="footer-section social">
+                <h3>გამოგვყევით</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Green AI. ყველა უფლება დაცულია.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const main = document.querySelector('main');
+            main.classList.add('loaded');
+
+            const header = document.querySelector('header');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

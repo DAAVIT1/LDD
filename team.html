@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>გუნდი - Green AI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Georgian', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }
+
+        header {
+            background: var(--dark-color);
+            color: var(--light-color);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: background 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(44, 62, 80, 0.9);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--light-color);
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        main {
+            padding-top: 80px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        main.loaded {
+            opacity: 1;
+        }
+
+        .team-section {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .team-section h2 {
+            color: var(--dark-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            background: #fff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .team-member h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .team-member p {
+            color: #666;
+        }
+
+        footer {
+            background: linear-gradient(to right, var(--dark-color), #34495e);
+            color: var(--light-color);
+            padding: 3rem 0 1rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .footer-section p {
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section.about p {
+            text-align: justify;
+        }
+
+        .footer-section.contact p {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-section.contact i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: var(--light-color);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #34495e;
+        }
+
+        .footer-bottom p {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-section {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+
+            .footer-section h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Green AI</a>
+            <ul>
+                <li><a href="index.html">მთავარი</a></li>
+                <li><a href="prototype.html">პროტოტიპი</a></li>
+                <li><a href="about.html">ჩვენს შესახებ</a></li>
+                <li><a href="team.html">გუნდი</a></li>
+                <li><a href="contact.html">კონტაქტი</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="team" class="team-section">
+            <h2>ჩვენი გუნდი</h2>
+            <div class="team-grid">
+                <div class="team-member" data-member="demetreKarasashvili">
+                    <img src="images/download (2).jpeg" alt="დემეტრე ყარასაშვილი">
+                    <h3>დემეტრე ყარასაშვილი</h3>
+                    <p>ჰარდვეარ-ინჟინერი</p>
+                </div>
+                <div class="team-member" data-member="leksoGremelashvili">
+                    <img src="images/download (1).jpeg" alt="ლექსო გრემელაშვილი">
+                    <h3>ლექსო გრემელაშვილი</h3>
+                    <p>3D-დიზაინერი</p>
+                </div>
+                <div class="team-member" data-member="davitJachvadze">
+                    <img src="images/Davit.jpeg" alt="დავით ჯაჭვაძე">
+                    <h3>დავით ჯაჭვაძე</h3>
+                    <p>ვებ-დეველოპერი</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>ჩვენს შესახებ</h3>
+                <p>Green AI არის ინოვაციური პროექტი, რომელიც მიზნად ისახავს გარემოს დაცვას ხელოვნური ინტელექტის გამოყენებით.</p>
+            </div>
+            <div class="footer-section contact">
+                <h3>კონტაქტი</h3>
+                <p><i class="fas fa-envelope"></i> info@greenai.ge</p>
+                <p><i class="fas fa-phone"></i> +995 555 12 34 56</p>
+            </div>
+            <div class="footer-section social">
+                <h3>გამოგვყევით</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Green AI. ყველა უფლება დაცულია.</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="memberModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalName"></h2>
+            <p id="modalRole"></p>
+            <h4>უნარები:</h4>
+            <ul id="modalSkills"></ul>
+            <h4>წვლილი სტარტაპში:</h4>
+            <p id="modalContribution"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const main = document.querySelector('main');
+            const header = document.querySelector('header');
+            const teamMembers = document.querySelectorAll('.team-member');
+            const modal = document.getElementById('memberModal');
+            const modalName = document.getElementById('modalName');
+            const modalRole = document.getElementById('modalRole');
+            const modalSkills = document.getElementById('modalSkills');
+            const modalContribution = document.getElementById('modalContribution');
+            const closeBtn = document.querySelector('.close');
+
+            main.classList.add('loaded');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            const teamData = {
+                demetreKarasashvili: {
+                    name: "დემეტრე ყარასაშვილი",
+                    role: "ჰარდვეარ-ინჟინერი",
+                    skills: ["ელექტრონული სისტემების დიზაინი", "IoT მოწყობილობების შემუშავება", "სენსორული ტექნოლოგიები"],
+                    contribution: "დემეტრემ შეიმუშავა ჩვენი პროექტის ჰარდვეარული ნაწილი, მათ შორის სენსორები და მონაცემთა შეგროვების სისტემები."
+                },
+                leksoGremelashvili: {
+                    name: "ლექსო გრემელაშვილი",
+                    role: "3D-დიზაინერი",
+                    skills: ["3D მოდელირება", "ვიზუალიზაცია", "პროტოტიპირება"],
+                    contribution: "ლექსომ შექმნა ჩვენი პროდუქტის 3D მოდელები და ვიზუალური კონცეფციები, რამაც დაგვეხმარა იდეის უკეთ წარმოჩენაში."
+                },
+                davitJachvadze: {
+                    name: "დავით ჯაჭვაძე",
+                    role: "ვებ-დეველოპერი",
+                    skills: ["ფრონტენდ დეველოპმენტი", "ბექენდ დეველოპმენტი", "მონაცემთა ბაზები"],
+                    contribution: "დავითმა შექმნა ჩვენი ვებ-პლატფორმა, რომელიც უზრუნველყოფს მონაცემების ვიზუალიზაციას და მომხმარებლის ინტერფეისს."
+                }
+            };
+
+            function openModal(member) {
+                const data = teamData[member];
+                modalName.textContent = data.name;
+                modalRole.textContent = data.role;
+                modalSkills.innerHTML = data.skills.map(skill => `<li>${skill}</li>`).join('');
+                modalContribution.textContent = data.contribution;
+                modal.style.display = 'block';
+            }
+
+            function closeModal() {
+                modal.style.display = 'none';
+            }
+
+            teamMembers.forEach(member => {
+                member.addEventListener('click', () => {
+                    const memberData = member.getAttribute('data-member');
+                    openModal(memberData);
+                });
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
