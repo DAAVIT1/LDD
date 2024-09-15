@@ -252,32 +252,86 @@
             height: 100%;
             overflow: auto;
             background-color: rgba(0,0,0,0.4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
         }
 
         .modal-content {
             background-color: #fefefe;
             margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
+            padding: 2rem;
+            border: none;
+            width: 90%;
             max-width: 600px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: scale(0.7);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+            opacity: 1;
         }
 
         .close {
-            color: #aaa;
+            color: var(--dark-color);
             float: right;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
+            transition: color 0.3s ease;
         }
 
         .close:hover,
         .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        #modalName {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        #modalRole {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal h4 {
+            color: var(--dark-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #modalSkills {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        #modalSkills li {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        #modalContribution {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0 5px 5px 0;
         }
 
         @media (max-width: 768px) {
@@ -299,6 +353,11 @@
 
             .social-icons {
                 justify-content: center;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
             }
         }
     </style>
@@ -379,13 +438,13 @@
             <p id="modalContribution"></p>
         </div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const main = document.querySelector('main');
             const header = document.querySelector('header');
             const teamMembers = document.querySelectorAll('.team-member');
             const modal = document.getElementById('memberModal');
+            const modalContent = modal.querySelector('.modal-content');
             const modalName = document.getElementById('modalName');
             const modalRole = document.getElementById('modalRole');
             const modalSkills = document.getElementById('modalSkills');
@@ -430,10 +489,16 @@
                 modalSkills.innerHTML = data.skills.map(skill => `<li>${skill}</li>`).join('');
                 modalContribution.textContent = data.contribution;
                 modal.style.display = 'block';
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
             }
 
             function closeModal() {
-                modal.style.display = 'none';
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
             }
 
             teamMembers.forEach(member => {
